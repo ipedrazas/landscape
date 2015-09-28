@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en-GB" ng-app="landscape" >
+<head>
+
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/app.css">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+</head>
+
+<body ng-controller="main">
+<nav>
+    <div class="nav-wrapper" class="blue darken-3">
+      <a href="#" class="brand-logo">Landscape v0.0.1</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="sass.html"><i class="material-icons prefix">account_circle</i> </a></li>
+      </ul>
+    </div>
+  </nav>
+
+<div class="container">
+
+    <div class="row">
+
+          <div class="col s4">
+
+                <div class="row">
+                    <form  class="col s12">
+                    <div class="row">
+                        <div class="input-field col s10">
+                          <i class="material-icons prefix">account_circle</i>
+                          <input id="icon_per" type="text" class="validate" ng-model="personName" do-Enter="savePerson();" >
+                          <label for="icon_per">New Person</label>
+                    </div>
+                    </div>
+
+                    </form>
+                </div>
+                <h3 class="subheader">People</h3>
+                <div class="row">
+                     <div class="col s11 offset-s1">
+                        <ul ng-repeat="person in people">
+                            <li>
+                                <span class="entry">{{person.name}}</span><a ng-click="link(person)" ><i class="material-icons">trending_flat</i><i class="material-icons">view_week</i></a>
+                                <ul ng-repeat="child in person.children">
+                                    <li class="reslink">
+                                            {{child.source_name}}
+                                                    <i class="material-icons">trending_flat</i>
+                                            {{child.rel}}
+                                                    <i class="material-icons">trending_flat</i>
+                                            {{child.target_name}}
+                                       </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                     <div ng-show="editingPerson">
+                        <div class="input-field col s10 offset 2">
+                        <span>{{editingPerson.name}}</span>
+                           <select ng-model="rel.label"
+                                ng-options="a.name group by a.type for a in rels">
+                            </select>
+
+                        <select ng-model="rel.target"
+                                ng-options="app.name for app in applications">
+                        </select>
+
+                            <a  ng-click="saveRel('Person')">
+                                    <i class="fa fa-floppy-o fa-2x "></i>
+                              </a>
+                          </div>
+                    </div>
+                </div>
+          </div>
+
+          <div class="col s4">
+                <div class="row">
+                    <form  class="col s12">
+                    <div class="row">
+                        <div class="input-field col s10">
+                          <i class="material-icons prefix">web</i>
+                          <label for="icon_app">New Application</label>
+                          <input id="icon_app" type="text" class="validate" ng-model="applicationName" do-Enter="saveApplication();">
+                        </div>
+                </div>
+
+
+                    </form>
+                </div>
+                <h3  class="subheader">Applications</h3>
+                <div class="row">
+                    <ul ng-repeat="app in applications">
+                        <li><span class="entry">{{app.name}}</span>
+                                <ul ng-repeat="child in app.children">
+                                    <li>{{child.source_name}} -> {{child.rel}} -> {{child.target_name}}  </li>
+                                </ul>
+                        </li>
+                    </ul>
+                </div>
+          </div>
+
+
+
+        <div class="col s4">
+                <div class="row">
+                    <form  class="col s12">
+                    <div class="row">
+                        <div class="input-field col s10">
+                          <i class="material-icons prefix">dns</i>
+                          <label for="icon_comp">New Component</label>
+                          <input id="icon_comp" type="text" class="validate" ng-model="componentName" do-Enter="saveComponent();">
+                        </div>
+                </div>
+                   </form>
+            </div>
+            <h3 class="subheader">Components</h3>
+            <div class="row">
+                <ul ng-repeat="comp in components">
+                    <li>
+                            <span class="entry">{{comp.name}}</span>
+                             <a ng-click="link(comp)" ><i class="material-icons">trending_flat</i><i class="material-icons">web</i></a>
+                            <ul ng-repeat="child in comp.children">
+                                <li class="reslink subtle">
+                                            {{child.source_name}}
+                                                    <i class="material-icons">trending_flat</i>
+                                            {{child.rel}}
+                                                    <i class="material-icons">trending_flat</i>
+                                            {{child.target_name}}
+                                       </li>
+                            </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div ng-show="editingComponent">
+                <span>{{editingComponent.name}}</span>
+                <select data-ng-model="rel.label"
+                        data-ng-options="a.name group by a.type for a in rels">
+                </select>
+                <select data-ng-model="rel.target"
+                        data-ng-options="app.name for app in applications">
+                </select>
+                <a  ng-click="saveRel('Component')">
+                         <i class="fa fa-floppy-o fa-2x"></i>
+                </a>
+            </div>
+        </div>
+    </div> <!-- end div.row -->
+</div> <!-- end container -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+<script src="js/underscore.js"></script>
+
+<script src="app.js"></script>
+<script src="services.js"></script>
+<script src="controllers.js"></script>
+<script src="directives.js"></script>
+
+</body>
+</html>
