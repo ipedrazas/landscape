@@ -1,4 +1,33 @@
-# landscape
-Module to display entity maps
+# Landscape
 
-UI -> API -> Neo4j
+Landscape allows you to create a map of your applications.
+
+```
+                 +----------+    +----------+                      
+                 | Person   |    | Person   |                      
+                 +---------++    +--+-------+                      
+                           |        |                              
+                           |        |                              
+                           |        |                              
+                       +---v--------v-+                            
+                       |              |                            
+                  +---->  Application <--------------------+       
+                  |    |              |                    |       
+                  |    +-----^--------+                    |       
+                  |          |                             |       
+                  |          |                             |       
+                  |          |                             |       
+                  |          |                             |       
+         +--------+-----+    |  +------------+      +------+------+
+         |  Component   |    |  | Component  |      |  Component  |
+         |              |    +--+            |      |             |
+         +-------^------+       +------------+      +-------------+
+                 |                                                 
+                 |                                                 
+                 |                                                 
+                 |                                                 
++------------+   |   +-----------+                                 
+| Component  +---+---+ Component |                                 
+|            |       |           |                                 
++------------+       +-----------+    
+```
