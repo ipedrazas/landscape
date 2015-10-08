@@ -31,3 +31,5 @@ Landscape allows you to create a map of your applications.
 |            |       |           |                                 
 +------------+       +-----------+    
 ```
+
+The system allows you to define and link components vi a UI or an API
